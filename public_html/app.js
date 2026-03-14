@@ -11,6 +11,7 @@ const ui = {
     count: document.querySelector("#uuidCount"),
     refresh: document.querySelector("#uuidRefresh"),
     copy: document.querySelector("#uuidCopy"),
+    download: document.querySelector("#uuidDownload"),
     status: document.querySelector("#uuidStatus"),
   },
 };
@@ -165,6 +166,45 @@ function getUuidCopyText() {
   return state.uuidList.join("\n");
 }
 
+function getTimestampForFilename() {
+  const now = new Date();
+  const yyyy = now.getFullYear();
+  const mm = String(now.getMonth() + 1).padStart(2, "0");
+  const dd = String(now.getDate()).padStart(2, "0");
+  const hh = String(now.getHours()).padStart(2, "0");
+  const min = String(now.getMinutes()).padStart(2, "0");
+  const ss = String(now.getSeconds()).padStart(2, "0");
+  return `${yyyy}${mm}${dd}-${hh}${min}${ss}`;
+}
+
+function downloadTextFile(content, filename) {
+  if (!content) {
+    return;
+  }
+  const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = filename;
+  document.body.appendChild(anchor);
+  anchor.click();
+  document.body.removeChild(anchor);
+  URL.revokeObjectURL(url);
+}
+
+function downloadUuidList() {
+  const text = getUuidCopyText();
+  if (!text) {
+    setStatus(ui.uuid.status, "Nothing to download.");
+    return;
+  }
+  const timestamp = getTimestampForFilename();
+  const suffix = state.uuidList.length > 1 ? `-${state.uuidList.length}` : "";
+  const filename = `uuid-v4${suffix}-${timestamp}.txt`;
+  downloadTextFile(`${text}\n`, filename);
+  setStatus(ui.uuid.status, "TXT downloaded.");
+}
+
 function refreshUuid() {
   const count = setUuidCount(ui.uuid.count.value);
   const next = buildUuidList(count);
@@ -197,6 +237,8 @@ function bindEvents() {
   ui.uuid.copy.addEventListener("click", () => {
     copyText(getUuidCopyText(), ui.uuid.status, state.uuidList.length > 1 ? "UUID list" : "UUID");
   });
+
+  ui.uuid.download.addEventListener("click", downloadUuidList);
 
   ui.uuid.outputWrap.addEventListener("click", (event) => {
     if (event.target.closest("button")) {

@@ -10,6 +10,7 @@ Live site: https://uuid.airat.top/
 
 - Fully local generation using `window.crypto`.
 - UUID v4 list generation from 1 to 10,000 values with one-click copy.
+- Download generated UUIDs as a `.txt` file.
 - No history or analytics; only local settings are stored.
 - Instant copy on click with clear feedback.
 - Mobile-first layout that scales to desktop.

@@ -313,6 +313,11 @@ h1 {
   gap: 12px;
 }
 
+.action-row--uuid .action-button {
+  min-width: 208px;
+  justify-content: center;
+}
+
 .action-button {
   appearance: none;
   border: 1px solid var(--border);
@@ -378,13 +383,18 @@ h1 {
   font-size: 18px;
 }
 
+.card--compact {
+  width: min(420px, 100%);
+  justify-self: center;
+}
+
 .field {
   display: grid;
   gap: 6px;
 }
 
 .uuid-count-field {
-  max-width: 240px;
+  width: 100%;
 }
 
 .field span {
