@@ -11,6 +11,7 @@ Live site: https://uuid.airat.top/
 - Fully local generation using `window.crypto`.
 - UUID v4 and UUID v7 list generation from 1 to 10,000 values with one-click copy.
 - Quick version switcher (v4 random or v7 time-ordered).
+- Default version is v4.
 - Download generated UUIDs as a `.txt` file.
 - No history or analytics; only local settings are stored.
 - Instant copy on click with clear feedback.
